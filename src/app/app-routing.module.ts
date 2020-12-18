@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import{RouterModule, Routes} from '@angular/router';
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
+import { ChartsComponent } from './charts/charts/charts.component';
 
 const routes: Routes = [
   {
@@ -10,27 +11,27 @@ const routes: Routes = [
     loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule)
 
   },
-  // {
-  //   path:'graph',
-  //   loadChildren: 'app/products/products.module#ProductsModule'
-  // },
-  // {
-  //   path:'grid',
-  //   loadChildren: 'app/products/products.module#ProductsModule'
-  // },
-  // {
-  //   path:'map',
-  //   loadChildren: 'app/products/products.module#ProductsModule'
-  // },
-  // {
-  //   path:'pivot',
-  //   loadChildren: 'app/products/products.module#ProductsModule'
-  // },
+  {
+    path:'graph',
+    loadChildren: () => import('./graph/graph.module').then(m => m.GraphModule)
+  },
+  {
+    path:'grid',
+    loadChildren: () => import('./grid/grid.module').then(m => m.GridModule)
+  },
+  {
+    path:'map',
+    loadChildren: () => import('./map/map.module').then(m => m.MapModule)
+  },
+  {
+    path:'pivot',
+    loadChildren: () => import('./pivot/pivot.module').then(m => m.PivotModule)
+  },
   {
     path: '',
     redirectTo: '',
     pathMatch: 'full',
-    component: AppComponent
+    component: ChartsComponent
   } 
 ];
 @NgModule({
