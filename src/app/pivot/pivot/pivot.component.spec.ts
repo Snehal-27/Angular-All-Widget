@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PivotComponent } from './pivot.component';
 
@@ -6,7 +6,7 @@ describe('PivotComponent', () => {
   let component: PivotComponent;
   let fixture: ComponentFixture<PivotComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PivotComponent ]
     })
