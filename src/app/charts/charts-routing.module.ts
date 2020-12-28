@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { ChartGenerateComponent } from './chart-generate/chart-generate.component';
 import { ChartsComponent } from './charts/charts.component';
-
 
 const chartsRoutes: Routes = [
   {
     path: '', 
     component: ChartsComponent,
     children: [
-      { path: 'charts', component: ChartsComponent },
-    ]
+      { path:':id/detail', component: ChartsComponent },
+      { path: '', component: ChartGenerateComponent }  
+      ]
   }
 ]
 

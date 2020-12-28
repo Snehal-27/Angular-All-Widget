@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { google } from "google-maps";
-import { ViewChild } from '@angular/core';
-
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  selector: 'app-map-details',
+  templateUrl: './map-details.component.html',
+  styleUrls: ['./map-details.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapDetailsComponent implements OnInit {
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
   latitude: number;
@@ -61,4 +59,5 @@ export class MapComponent implements OnInit {
     this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
   }
 }
+
 

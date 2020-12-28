@@ -8,7 +8,7 @@ import { ChartsComponent } from './charts/charts/charts.component';
 const routes: Routes = [
   {
     path: 'charts',
-    loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule)
+    loadChildren: () => import('./charts/chart.module').then(m => m.ChartModule)
 
   },
   {
