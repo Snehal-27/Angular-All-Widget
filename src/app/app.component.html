@@ -7,6 +7,88 @@
 
     <hr />
 
-
+    <div style="display: block;">
+        <canvas baseChart 
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </div>
+      <!-- <div style="display: block;">
+        <canvas baseChart 
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+      </div> -->
+      <div style="display: block;">
+        <canvas baseChart 
+          [data]="pieChartData" 
+          [labels]="pieChartLabels" 
+          [chartType]="pieChartType"
+          [options]="pieChartOptions"
+          [plugins]="pieChartPlugins"
+          [legend]="pieChartLegend">
+        </canvas>
+      </div>
+      <div style="display: block;">
+        <canvas baseChart 
+          [data]="doughnutChartData"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType">
+        </canvas>
+      </div>
+      <div style="display: block;">
+        <canvas baseChart
+          [datasets]="radarChartData"
+          [options]="radarChartOptions"
+          [labels]="radarChartLabels"
+          [chartType]="radarChartType">
+        </canvas>
+      </div>
+      <div style="display: block;">
+        <canvas baseChart
+          [data]="polarAreaChartData"
+          [labels]="polarAreaChartLabels"
+          [legend]="polarAreaLegend"
+          [chartType]="polarAreaChartType">
+        </canvas>
+      </div>
+      <div style="display: block;">
+        <canvas baseChart
+          [datasets]="bubbleChartData"
+          [options]="bubbleChartOptions"
+          [colors]="bubbleChartColors"
+          [legend]="bubbleChartLegend"
+          [chartType]="bubbleChartType">
+        </canvas>
+      </div>
+      <div style="display: block;">
+        <canvas baseChart
+          [datasets]="scatterChartData"
+          [options]="scatterChartOptions"
+          [chartType]="scatterChartType">
+        </canvas>
+      </div>
+      <div style="display: block;">
+        <canvas baseChart width="400" height="400"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+      </div>
+      
+      
     <router-outlet></router-outlet>
 </div>
