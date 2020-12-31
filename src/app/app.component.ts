@@ -8,7 +8,10 @@ import { Customer, Representative } from './customer';
 import { CustomerService } from './customerservice';
 import { Table } from 'primeng/table';
 import { PrimeNGConfig } from 'primeng/api';
-import { google } from "google-maps";
+// import { google } from "google-maps";
+import { NgxGraphModule } from '@swimlane/ngx-graph';
+import * as shape from 'd3-shape';
+
 
 @Component({
   selector: 'app-root',
@@ -169,11 +172,79 @@ export class AppComponent {
   };
 
   //map
-  @ViewChild('gmap') gmapElement: any;
-map: google.maps.Map;
-latitude: number;
-longitude: number;
-google: google;
+//   @ViewChild('gmap') gmapElement: any;
+// map: google.maps.Map;
+// latitude: number;
+// longitude: number;
+// google: google;
+
+hierarchialGraph = {nodes: [], links: []}
+  curve = shape.curveBundle.beta(1);
+  // curve = shape.curveLinear;
+
+  
+  showGraph() {
+    this.hierarchialGraph.nodes = [
+  {
+    id: 'start',
+    label: 'scan',
+    position: 'x0'
+  }, {
+    id: '1',
+    label: 'Event#a',
+    position: 'x1'
+  }, {
+    id: '2',
+    label: 'Event#x',
+    position: 'x2'
+  }, {
+    id: '3',
+    label: 'Event#b',
+    position: 'x3'
+  }, {
+    id: '4',
+    label: 'Event#c',
+    position: 'x4'
+  }, {
+    id: '5',
+    label: 'Event#y',
+    position: 'x5'
+  }, {
+    id: '6',
+    label: 'Event#z',
+    position: 'x6'
+  }
+  ];
+
+  this.hierarchialGraph.links = [
+  {
+    source: 'start',
+    target: '1',
+    label: 'Process#1'
+  }, {
+    source: 'start',
+    target: '2',
+    label: 'Process#2'
+  }, {
+    source: '1',
+    target: '3',
+    label: 'Process#3'
+  }, {
+    source: '2',
+    target: '4',
+    label: 'Process#4'
+  }, {
+    source: '2',
+    target: '6',
+    label: 'Process#6'
+  }, {
+    source: '3',
+    target: '5'
+  }
+  ];
+
+  }
+
 
 
   constructor(private customerService: CustomerService,private primengConfig: PrimeNGConfig) {
@@ -191,6 +262,8 @@ google: google;
 
   
   ngOnInit() {
+    this.showGraph();
+
     this.customerService.getCustomersLarge().then(customers => {
         this.customers = customers;
         this.loading = false;
@@ -219,35 +292,35 @@ google: google;
     ]
     this.primengConfig.ripple = true;
 
-    var mapProp = {
-      center: new google.maps.LatLng(18.5793, 73.8143),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.HYBRID
-    };
-    var mapOptions = {
-      panControl: true,
-      zoomControl: true,
-      zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.LARGE
-    },
-      mapTypeControl: true,
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_CENTER
-      },
-      scaleControl: true,
-      streetViewControl: true,
-      overviewMapControl: true,
-      rotateControl: true
+//     var mapProp = {
+//       center: new google.maps.LatLng(18.5793, 73.8143),
+//       zoom: 15,
+//       mapTypeId: google.maps.MapTypeId.HYBRID
+//     };
+//     var mapOptions = {
+//       panControl: true,
+//       zoomControl: true,
+//       zoomControlOptions: {
+//         style: google.maps.ZoomControlStyle.LARGE
+//     },
+//       mapTypeControl: true,
+//       mapTypeControlOptions: {
+//         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+//         position: google.maps.ControlPosition.TOP_CENTER
+//       },
+//       scaleControl: true,
+//       streetViewControl: true,
+//       overviewMapControl: true,
+//       rotateControl: true
   
-    }
+//     }
   
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('roadmap'));
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('terrain'));
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('satellite'));
+//     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+//     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('roadmap'));
+//     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('terrain'));
+//     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('satellite'));
   
-}
+ }
 onActivityChange(event) {
   const value = event.target.value;
   if (value && value.trim().length) {
@@ -287,15 +360,20 @@ onRepresentativeChange(event) {
 
 
 
-setMapType(mapTypeId: string) {
-  this.map.setMapTypeId(mapTypeId)
-}
+// setMapType(mapTypeId: string) {
+//   this.map.setMapTypeId(mapTypeId)
+// }
 
 
-setCenter(e: any) {
-  e.preventDefault();
-  this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
-}
+// setCenter(e: any) {
+//   e.preventDefault();
+//   this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
+// }
+
+
+
+
+  
 
 
 }

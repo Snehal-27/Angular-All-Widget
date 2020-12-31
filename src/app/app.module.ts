@@ -25,6 +25,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import {AngularPivotTableModule} from 'angular-pivot-table';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 
 @NgModule({
   declarations: [AppComponent
@@ -54,7 +55,7 @@ import {AngularPivotTableModule} from 'angular-pivot-table';
     HttpClientModule,
     FormsModule,
     AngularPivotTableModule,
-    
+    NgxGraphModule
   ],
   providers: [CustomerService],
   bootstrap: [AppComponent]
