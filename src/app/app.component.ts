@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets,RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { Color } from 'ng2-charts';
 import { SingleDataSet,  monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
 import { MultiDataSet } from 'ng2-charts';
+import { Customer, Representative } from './customer';
+import { CustomerService } from './customerservice';
+import { Table } from 'primeng/table';
+import { PrimeNGConfig } from 'primeng/api';
+import { google } from "google-maps";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./appdemo.scss']
 })
 export class AppComponent {
   title = 'app';
-  
+  //bar chart
   public barChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -26,6 +31,7 @@ export class AppComponent {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
   ];
 
+  //line chart
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
   ];
@@ -43,6 +49,8 @@ export class AppComponent {
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [];
 
+
+  //pie chart
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -52,6 +60,7 @@ export class AppComponent {
   public pieChartLegend = true;
   public pieChartPlugins = [];
 
+  //doughnut chart
   public doughnutChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
   public doughnutChartData: MultiDataSet = [
     [350, 450, 100],
@@ -59,6 +68,8 @@ export class AppComponent {
     [250, 130, 70],
   ];
   public doughnutChartType: ChartType = 'doughnut';
+
+  //radar
   public radarChartOptions: RadialChartOptions = {
     responsive: true,
   };
@@ -70,12 +81,14 @@ export class AppComponent {
   ];
   public radarChartType: ChartType = 'radar';
 
+  //polar chart
   public polarAreaChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
   public polarAreaChartData: SingleDataSet = [300, 500, 100, 40, 120];
   public polarAreaLegend = true;
 
   public polarAreaChartType: ChartType = 'polarArea';
 
+  //bubble chart
   public bubbleChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -108,6 +121,7 @@ export class AppComponent {
     },
   ];
 
+  //scatter chart
    public scatterChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -127,8 +141,42 @@ export class AppComponent {
   ];
   public scatterChartType: ChartType = 'scatter';
 
-  
-  constructor() {
+
+  //grid
+  customers: Customer[];
+
+  selectedCustomers: Customer[];
+
+  representatives: Representative[];
+
+  statuses: any[];
+
+  loading: boolean = true;
+
+
+  //pivot
+  @ViewChild('dt') table: Table;
+
+  source: any = [
+    {'author': 'Deba', 'book': 'Angular'},
+    {'author': 'Deba', 'book': 'Physics'},
+    {'author': 'Aditya', 'book': 'Angular'}
+  ];
+
+  configs: any = {
+    'rows': 'author',
+    'columns': 'book'
+  };
+
+  //map
+  @ViewChild('gmap') gmapElement: any;
+map: google.maps.Map;
+latitude: number;
+longitude: number;
+google: google;
+
+
+  constructor(private customerService: CustomerService,private primengConfig: PrimeNGConfig) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -140,4 +188,114 @@ export class AppComponent {
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }
+
+  
+  ngOnInit() {
+    this.customerService.getCustomersLarge().then(customers => {
+        this.customers = customers;
+        this.loading = false;
+    });
+
+    this.representatives = [
+        {name: "Amy Elsner", image: 'amyelsner.png'},
+        {name: "Anna Fali", image: 'annafali.png'},
+        {name: "Asiya Javayant", image: 'asiyajavayant.png'},
+        {name: "Bernardo Dominic", image: 'bernardodominic.png'},
+        {name: "Elwin Sharvill", image: 'elwinsharvill.png'},
+        {name: "Ioni Bowcher", image: 'ionibowcher.png'},
+        {name: "Ivan Magalhaes",image: 'ivanmagalhaes.png'},
+        {name: "Onyama Limba", image: 'onyamalimba.png'},
+        {name: "Stephen Shaw", image: 'stephenshaw.png'},
+        {name: "XuXue Feng", image: 'xuxuefeng.png'}
+    ];
+
+    this.statuses = [
+        {label: 'Unqualified', value: 'unqualified'},
+        {label: 'Qualified', value: 'qualified'},
+        {label: 'New', value: 'new'},
+        {label: 'Negotiation', value: 'negotiation'},
+        {label: 'Renewal', value: 'renewal'},
+        {label: 'Proposal', value: 'proposal'}
+    ]
+    this.primengConfig.ripple = true;
+
+    var mapProp = {
+      center: new google.maps.LatLng(18.5793, 73.8143),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+    var mapOptions = {
+      panControl: true,
+      zoomControl: true,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE
+    },
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_CENTER
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      overviewMapControl: true,
+      rotateControl: true
+  
+    }
+  
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('roadmap'));
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('terrain'));
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('satellite'));
+  
+}
+onActivityChange(event) {
+  const value = event.target.value;
+  if (value && value.trim().length) {
+      const activity = parseInt(value);
+
+      if (!isNaN(activity)) {
+          this.table.filter(activity, 'activity', 'gte');
+      }
+  }
+}
+
+onDateSelect(value) {
+  this.table.filter(this.formatDate(value), 'date', 'equals')
+}
+
+formatDate(date) {
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+
+  if (month < 10) {
+      month = '0' + month;
+  }
+
+  if (day < 10) {
+      day = '0' + day;
+  }
+
+  return date.getFullYear() + '-' + month + '-' + day;
+}
+
+onRepresentativeChange(event) {
+  this.table.filter(event.value, 'representative', 'in')
+}
+
+
+
+
+
+
+setMapType(mapTypeId: string) {
+  this.map.setMapTypeId(mapTypeId)
+}
+
+
+setCenter(e: any) {
+  e.preventDefault();
+  this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
+}
+
+
 }
