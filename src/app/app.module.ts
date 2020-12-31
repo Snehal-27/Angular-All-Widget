@@ -7,7 +7,7 @@ import { ChartModule } from './charts/chart.module';
 import { GridModule } from './grid/grid.module';
 import { PivotModule } from './pivot/pivot.module';
 import { GraphModule } from './graph/graph.module';
-import { GoogleMapsModule } from '@angular/google-maps'
+// import { GoogleMapsModule } from '@angular/google-maps'
 import { ChartsModule } from 'ng2-charts';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -38,7 +38,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     GridModule,
     PivotModule,
     GraphModule,
-    GoogleMapsModule,
+    // GoogleMapsModule,
     ChartsModule,
     BrowserAnimationsModule,
     TableModule,
